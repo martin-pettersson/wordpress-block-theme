@@ -1,0 +1,16 @@
+parameters:
+	phpVersion: 80200
+	level: 9
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	reportUnmatchedIgnoredErrors: false
+	paths:
+		- .
+	excludePaths:
+		analyse:
+			- configuration
+			- docker
+			- resources
+			- vendor
+	fileExtensions:
+		- php

@@ -1,0 +1,16 @@
+FROM node:18-alpine AS node
+FROM composer:2 AS composer
+FROM wordpress:cli-php8.2 AS wordpress-cli
+
+USER root
+
+RUN apk --update add libzip-dev zip && \
+    mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
+    docker-php-ext-configure zip && \
+    docker-php-ext-install zip
+
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
